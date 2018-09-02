@@ -1,1 +1,2 @@
-web: gunicorn thug_life.wsgi
+web: gunicorn thugmeme.wsgi --log-file -
+worker: celery -A thugmeme worker

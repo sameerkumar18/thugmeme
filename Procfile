@@ -1,0 +1,1 @@
+web: gunicorn thug_life.wsgi

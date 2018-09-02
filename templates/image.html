@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thug Life</title>
+    <script type="application/javascript">
+        function change_src() {
+            var json_response = JSON.parse(` {{ contents | safe}} `);
+            document.getElementById("image").src = json_response.url;
+            document.getElementById("whatsapp").src = document.getElementById("image").src;
+        }
+
+    </script>
+    <style>
+        img {
+            height: 50%;
+            width: 50%;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body onload="change_src()">
+
+{#<img src="data:image/png;base64,{{ contents }}">#}
+<img id="image" src="">
+
+<a id="whatsapp" data-action="share/whatsapp/share" src="">Share via Whatsapp</a>
+
+</body>
+</html>

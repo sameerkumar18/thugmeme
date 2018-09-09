@@ -6,11 +6,11 @@ from django.core.files.storage import FileSystemStorage
 from PIL import Image
 from ratelimit.decorators import ratelimit
 
-from thuglife.tasks import thug_life_task, text_meme_task, testtask
+from thuglife.tasks import thug_life_task, text_meme_task
 from thugmeme.settings import RATE_LIMIT, RATE_LIMIT_KEY, THUG_MEME_IMAGEQ, TEXT_MEME_IMAGEQ
 
 
-# @ratelimit(key=RATEL_LIMIT_KEY, rate=RATE_LIMIT)
+@ratelimit(key=RATE_LIMIT_KEY, rate=RATE_LIMIT)
 def thug_meme(request):
     if request.method == 'POST':
         file = request.FILES['inputfile']
@@ -23,8 +23,6 @@ def thug_meme(request):
         im.save(uploaded_file_url, quality=THUG_MEME_IMAGEQ)
 
         try:
-            # obj = ThugLifeMeme()
-            # contents = obj.meme(uploaded_file_url)
             t = thug_life_task.delay(uploaded_file_url)
             contents = t.get()
             os.remove(os.getcwd() + '/' + uploaded_file_url)
@@ -44,7 +42,7 @@ def thug_meme(request):
         return JsonResponse(data={"url": contents, "reason": ""}, status=200)
 
 
-# @ratelimit(key=RATEL_LIMIT_KEY', rate=RATE_LIMIT)
+@ratelimit(key=RATE_LIMIT_KEY, rate=RATE_LIMIT)
 def text_meme(request):
     top_text = request.POST["top"]
     bottom_text = request.POST["bottom"]
@@ -67,10 +65,3 @@ def text_meme(request):
         print(e)
         os.remove(os.getcwd() + '/' + uploaded_file_url)
         return JsonResponse(data={"url": "", "reason": str(e)}, status=500)
-
-
-def test_task(request):
-    #call task
-    response = testtask.delay(100000).get()
-    print(response)
-    return JsonResponse(data={'status': 'check logsss'}, status=200)

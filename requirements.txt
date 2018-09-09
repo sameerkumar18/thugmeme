@@ -18,4 +18,5 @@ imgurpython==1.1.7
 django-ratelimit==1.1.0
 celery==4.1.1
 redis==2.10.6
+git+https://github.com/theskumar/python-dotenv
 celery[redis]

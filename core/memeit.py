@@ -7,7 +7,7 @@ from cv2 import CascadeClassifier, imread, cvtColor, COLOR_BGR2GRAY, rectangle
 from thugmeme.settings import OBJECT_STORAGE_PROVIDER, OBJECT_STORAGE_CREDENTIALS
 from core.upload import Upload
 
-from thugmeme.settings import STATICFILES_DIRS
+from thugmeme.settings import STATICFILES_DIRS, BASE_DIR
 
 
 class ThugLifeMeme:
@@ -17,7 +17,7 @@ class ThugLifeMeme:
         pass
 
     def meme(self, image_path):
-        print(image_path)
+        image_path = BASE_DIR + image_path
         # thug life meme mask image path
         mask_path = STATICFILES_DIRS[0] + "/images/mask.png"
         # haarcascade path

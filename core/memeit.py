@@ -2,7 +2,8 @@ import os
 import uuid
 
 from PIL import Image, ImageFont, ImageDraw, ImageOps
-from cv2 import CascadeClassifier, imread, cvtColor, COLOR_BGR2GRAY, rectangle
+# from cv2 import CascadeClassifier, imread, cvtColor, COLOR_BGR2GRAY, rectangle
+import cv2
 
 from thugmeme.settings import OBJECT_STORAGE_PROVIDER, OBJECT_STORAGE_CREDENTIALS
 from core.upload import Upload
@@ -24,12 +25,12 @@ class ThugLifeMeme:
         casc_path = STATICFILES_DIRS[0] + "/xml/haarcascade_frontalface_default.xml"
 
         # cascade classifier object
-        face_cascade = CascadeClassifier(casc_path)
+        face_cascade = cv2.CascadeClassifier(casc_path)
 
         # read input image
-        image = imread(image_path)
+        image = cv2.imread(image_path)
         # convert image to grayscale
-        gray = cvtColor(image, COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         # detect faces in grayscale image
         faces = face_cascade.detectMultiScale(gray, 1.15)
@@ -40,7 +41,7 @@ class ThugLifeMeme:
         # paste mask on each detected face in input image
         for (x, y, w, h) in faces:
             # just to show detected faces
-            rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
+            cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
             # imshow('face detected', image)
             # waitKey(50)
 

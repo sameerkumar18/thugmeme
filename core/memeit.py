@@ -19,8 +19,8 @@ class ThugLifeMeme:
 
     def meme(self, image_path):
         # base_dir = BASE_DIR
+
         # base_dir += '/' if not base_dir == '/' else ''
-        # base_dir +
         image_path = image_path
         # thug life meme mask image path
         mask_path = STATICFILES_DIRS[0] + "/images/mask.png"
@@ -32,6 +32,7 @@ class ThugLifeMeme:
 
         # read input image
         image = cv2.imread(image_path)
+        print(os.listdir())
         print(image, image_path)
         # convert image to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

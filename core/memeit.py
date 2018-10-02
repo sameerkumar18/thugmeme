@@ -18,10 +18,10 @@ class ThugLifeMeme:
         pass
 
     def meme(self, image_path):
-        base_dir = BASE_DIR
-
-        base_dir += '/' if not base_dir == '/' else ''
-        image_path = base_dir + image_path
+        # base_dir = BASE_DIR
+        # base_dir += '/' if not base_dir == '/' else ''
+        # base_dir +
+        image_path = image_path
         # thug life meme mask image path
         mask_path = STATICFILES_DIRS[0] + "/images/mask.png"
         # haarcascade path

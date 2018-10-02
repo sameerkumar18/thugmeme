@@ -19,7 +19,7 @@ def thug_meme(request):
         filename = fs.save(file.name, file)
         uploaded_file_url = str(fs.url(filename)).replace("%20", " ")
         im = Image.open(uploaded_file_url)
-        os.remove(os.getcwd() + '/' + uploaded_file_url)
+        # os.remove(os.getcwd() + '/' + uploaded_file_url)
         im.save(uploaded_file_url, quality=THUG_MEME_IMAGEQ)
 
         try:

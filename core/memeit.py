@@ -29,6 +29,7 @@ class ThugLifeMeme:
 
         # read input image
         image = cv2.imread(image_path)
+        print(image, image_path)
         # convert image to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 

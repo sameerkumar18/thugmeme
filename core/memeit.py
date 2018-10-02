@@ -18,7 +18,10 @@ class ThugLifeMeme:
         pass
 
     def meme(self, image_path):
-        image_path = BASE_DIR + image_path
+        base_dir = BASE_DIR
+
+        base_dir += '/' if not base_dir == '/' else ''
+        image_path = base_dir + image_path
         # thug life meme mask image path
         mask_path = STATICFILES_DIRS[0] + "/images/mask.png"
         # haarcascade path
@@ -68,6 +71,7 @@ class ThugLifeMeme:
 
 class TextMeme:
     """Adds text and adds white space around the image for a meme like look"""
+
     def __init__(self):
         pass
 
@@ -87,7 +91,7 @@ class TextMeme:
         bottom_text_size = font.getsize(bottom_text)
         while top_text_size[0] > image_size[0] - 20 or bottom_text_size[0] > image_size[0] - 20:
             font_size = font_size - 1
-            font = ImageFont.truetype(STATICFILES_DIRS[0]+"/fonts/Impact.ttf", font_size)
+            font = ImageFont.truetype(STATICFILES_DIRS[0] + "/fonts/Impact.ttf", font_size)
             top_text_size = font.getsize(top_text)
             bottom_text_size = font.getsize(bottom_text)
 

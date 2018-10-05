@@ -1,4 +1,4 @@
-Django==2.0.2
+Django==2.0.8
 requests==2.18.4
 Pillow==4.2.1
 boto==2.48.0

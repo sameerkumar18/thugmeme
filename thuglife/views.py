@@ -8,7 +8,12 @@ from ratelimit.decorators import ratelimit
 
 from thuglife.tasks import thug_life_task, text_meme_task
 from thugmeme.settings import RATE_LIMIT, RATE_LIMIT_KEY, THUG_MEME_IMAGEQ, TEXT_MEME_IMAGEQ
+import os
+import redis
+import StringIO
+from uuid import uuid4
 
+r = redis.from_url(os.environ.get("REDIS_URL"))
 
 @ratelimit(key=RATE_LIMIT_KEY, rate=RATE_LIMIT)
 def thug_meme(request):
@@ -21,9 +26,14 @@ def thug_meme(request):
         im = Image.open(uploaded_file_url)
         # os.remove(os.getcwd() + '/' + uploaded_file_url)
         im.save(uploaded_file_url, quality=THUG_MEME_IMAGEQ)
-
+        im.save(output, format=im.format)
+        
+        filekey = uuid4();
+        
         try:
-            t = thug_life_task.delay(uploaded_file_url)
+            r.set(filekey, output.getvalue())
+            
+            t = thug_life_task.delay(uploaded_file_url,filekey)
             contents = t.get()
             os.remove(os.getcwd() + '/' + uploaded_file_url)
 

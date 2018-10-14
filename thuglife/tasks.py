@@ -2,7 +2,6 @@ from celery import shared_task
 from core import ThugLifeMeme, TextMeme
 
 import redis
-import StringIO
 from uuid import uuid4
 
 @shared_task(name='thuglife_task', ignore_result=False, bind=True)

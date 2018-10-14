@@ -20,3 +20,4 @@ celery==4.1.1
 redis==2.10.6
 django_dotenv
 celery[redis]
+StringIO

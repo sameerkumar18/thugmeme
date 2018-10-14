@@ -10,7 +10,7 @@ from thuglife.tasks import thug_life_task, text_meme_task
 from thugmeme.settings import RATE_LIMIT, RATE_LIMIT_KEY, THUG_MEME_IMAGEQ, TEXT_MEME_IMAGEQ
 import os
 import redis
-import StringIO
+from io import StringIO
 from uuid import uuid4
 
 r = redis.from_url(os.environ.get("REDIS_URL"))

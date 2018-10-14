@@ -1,9 +1,16 @@
 from celery import shared_task
 from core import ThugLifeMeme, TextMeme
 
+import redis
+import StringIO
+from uuid import uuid4
 
 @shared_task(name='thuglife_task', ignore_result=False, bind=True)
-def thug_life_task(t, uploaded_file_url):
+def thug_life_task(t, uploaded_file_url,filekey):
+    r = redis.from_url(os.environ.get("REDIS_URL"))
+    file = r.get(filekey)
+    print(file);
+    
     obj = ThugLifeMeme()
     contents = obj.meme(uploaded_file_url)
     return contents

@@ -39,7 +39,7 @@ def thug_meme(request):
         try:
             #r.set(filekey, output.getvalue())
             
-            url = client.upload_from_path(uploaded_file_url)
+            url = client.upload_from_path(uploaded_file_url)['link']
             t = thug_life_task.delay(url, filename)
             contents = t.get()
             os.remove(os.getcwd() + '/' + uploaded_file_url)

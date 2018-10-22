@@ -10,8 +10,11 @@ from uuid import uuid4
 @shared_task(name='thuglife_task', ignore_result=False, bind=True)
 def thug_life_task(t, image_url, name):
     obj = ThugLifeMeme()
+    print(image_url);
     
     uploaded_file_url = os.getcwd() + "/" + str(uuid4()) + "_" + name;
+    
+    print(uploaded_file_url);
     
     urllib.request.urlretrieve(image_url, uploaded_file_url)
     

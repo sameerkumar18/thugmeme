@@ -1,8 +1,7 @@
 from celery import shared_task
 from core import ThugLifeMeme, TextMeme
 
-
-import urllib
+import urllib.request
 import os
 
 import redis
@@ -14,8 +13,7 @@ def thug_life_task(t, image_url, name):
     
     uploaded_file_url = os.getcwd() + "/" + str(uuid4()) + "_" + name;
     
-    file = urllib.URLopener()
-    file.retrieve(image_url, uploaded_file_url)
+    urllib.request.urlretrieve(image_url, uploaded_file_url)
     
     
     contents = obj.meme(uploaded_file_url)

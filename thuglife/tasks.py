@@ -12,7 +12,7 @@ from uuid import uuid4
 def thug_life_task(t, image_url, name):
     obj = ThugLifeMeme()
     
-    uploaded_file_url = os.getcwd() + "/" + uuid() + "_" + name;
+    uploaded_file_url = os.getcwd() + "/" + uuid4() + "_" + name;
     
     file = urllib.URLopener()
     file.retrieve(image_url, uploaded_file_url)

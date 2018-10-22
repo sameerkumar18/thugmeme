@@ -12,8 +12,13 @@ import os
 import redis
 from io import StringIO
 from uuid import uuid4
+from imgurpython import ImgurClient
 
-r = redis.from_url(os.environ.get("REDIS_URL"))
+client_id = '9f7f3d8f201abba'
+client_secret = '02a4389e96d3b7f5c5a3614b3f8e6b8da39539ad'
+
+client = ImgurClient(client_id, client_secret)
+
 
 @ratelimit(key=RATE_LIMIT_KEY, rate=RATE_LIMIT)
 def thug_meme(request):
@@ -26,14 +31,16 @@ def thug_meme(request):
         im = Image.open(uploaded_file_url)
         # os.remove(os.getcwd() + '/' + uploaded_file_url)
         im.save(uploaded_file_url, quality=THUG_MEME_IMAGEQ)
-        im.save(output, format=im.format)
         
-        filekey = uuid4();
+        #im.save(output, format=im.format)
+        
+        #filekey = uuid4();
         
         try:
-            r.set(filekey, output.getvalue())
+            #r.set(filekey, output.getvalue())
             
-            t = thug_life_task.delay(uploaded_file_url,filekey)
+            url = client.upload_from_path(uploaded_file_url)
+            t = thug_life_task.delay(url)
             contents = t.get()
             os.remove(os.getcwd() + '/' + uploaded_file_url)
 
@@ -50,7 +57,6 @@ def thug_meme(request):
             return JsonResponse({"url": "", "reason": str(e)}, status=500)
 
         return JsonResponse(data={"url": contents, "reason": ""}, status=200)
-
 
 @ratelimit(key=RATE_LIMIT_KEY, rate=RATE_LIMIT)
 def text_meme(request):

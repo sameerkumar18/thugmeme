@@ -3,6 +3,7 @@ from core import ThugLifeMeme, TextMeme
 
 
 import urllib
+import os
 
 import redis
 from uuid import uuid4

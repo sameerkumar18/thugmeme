@@ -62,7 +62,9 @@ class ThugLifeMeme:
             background.paste(mask, offset, mask=mask)
 
         # paste final thug life meme
-        output_path = "thug_" + str(image_path.split(".")[0]) + ".png"
+        file_name = os.path.basename(image_path)
+        
+        output_path = "thug_" + str(file_name.split(".")[0]) + ".png"
         background.save(output_path)
         obj = Upload(provider=OBJECT_STORAGE_PROVIDER, credentials=OBJECT_STORAGE_CREDENTIALS, file=output_path)
         cloud_url = obj.upload_file()
